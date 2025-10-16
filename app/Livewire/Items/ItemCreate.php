@@ -5,6 +5,7 @@ namespace App\Livewire\Items;
 use Livewire\Component;
 use App\Models\Item;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 
 class ItemCreate extends Component
 {
@@ -28,7 +29,8 @@ class ItemCreate extends Component
         ]);
         $imagePath = null;
         if ($this->image) {
-            $imagePath = $this->image->store('items', 'public');
+            $storedPath = $this->image->store('items', 'public');
+            $imagePath = Storage::url($storedPath);
         }
         Item::create([
             'code' => $this->code,
